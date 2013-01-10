@@ -1,26 +1,21 @@
 package com.example.prova;
 
 import java.io.InputStream;
-import java.util.Observable;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class ImageModel extends Observable {
+public class ImageModel extends ObservableModel {
 
-	private Bitmap bitmap;
-
-	public void setFromInputStream(InputStream is) {
-		bitmap = BitmapFactory.decodeStream(is);
-	}
-
-	public void notifyChanges() {
-		setChanged();
-		notifyObservers(this);
-	}
+	Bitmap bitmap;
 
 	public Bitmap getBitmap() {
 		return bitmap;
+	}
+
+	@Override
+	public void setFromInputStream(InputStream is) {
+		bitmap = BitmapFactory.decodeStream(is);
 	}
 
 }

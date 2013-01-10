@@ -20,7 +20,7 @@ public class DownloadService extends Service {
 		list = new ArrayList<String>();
 	}
 
-	public <T extends ImageModel> ObservableFutureTask<T> get(Class<T> type, String url) {
+	public <T extends ObservableModel> ObservableFutureTask<T> get(Class<T> type, String url) {
 		ExecutorService eService = Executors.newFixedThreadPool(10);
 		ObservableFutureTask<T> th = new ObservableFutureTask<T>(type, url);
 		eService.execute(th);

@@ -5,7 +5,7 @@ import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-class ObservableFutureTask<T extends ImageModel> extends FutureTask<T> {
+class ObservableFutureTask<T extends ObservableModel> extends FutureTask<T> {
 
 	private ArrayList<Observer> observers;
 
@@ -19,7 +19,7 @@ class ObservableFutureTask<T extends ImageModel> extends FutureTask<T> {
 		super.done();
 		if (isDone()) {
 			try {
-				T t = this.get();
+				ObservableModel t = this.get();
 				for(Observer observer : observers)
 					t.addObserver(observer);
 				t.notifyChanges();

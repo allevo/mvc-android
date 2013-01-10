@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 
 import org.json.JSONException;
 
-class DownloadCallable<T extends ImageModel> implements Callable<T> {
+class DownloadCallable<T extends ObservableModel> implements Callable<T> {
 	
 	private Class<T> type;
 	private String url;
