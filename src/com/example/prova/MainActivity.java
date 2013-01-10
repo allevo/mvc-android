@@ -9,27 +9,36 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.prova.DownloadService.MyServiceBinder;
+import com.example.prova.DownloadService.DownloadServiceBinder;
 import com.example.prova.ObserserverView.ObserverViewRunnable;
 
 public class MainActivity extends Activity {
 
-	protected MyServiceBinder mBinder;
+	private static final String LOGO_GOOGLE_URL = "https://www.google.it/images/srpr/logo3w.png";
+	
+	protected DownloadServiceBinder donwloadServiceBinder;
 	protected boolean linkedToService;
+
+	private ImageView view1;
+	private ImageView view2;
+	private ImageView view3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Log.e("MainActivity", "start connecting to DownloadService");
+
+		view1 = (ImageView) findViewById(R.id.image1);
+		view2 = (ImageView) findViewById(R.id.image2);
+		view3 = (ImageView) findViewById(R.id.image3);
+		
 		bindService(new Intent(this, DownloadService.class), conn,
 				Context.BIND_AUTO_CREATE);
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
@@ -37,48 +46,51 @@ public class MainActivity extends Activity {
 	}
 
 	protected void setModels() {
-		ObservableFutureTask<ImageModel> model = mBinder.getService().get(ImageModel.class, "https://www.google.it/images/srpr/logo3w.png");
-		ImageView view = (ImageView) findViewById(R.id.image);
-		ObserserverView<ImageView> ob = new ObserserverView<ImageView>(view, new ObserverViewRunnable<ImageView>() {
-			@Override
-			public void run(Observable observable, ImageView view) {
-				view.setImageBitmap(((ImageModel)observable).getBitmap());
-				view.invalidate();
-			}
-		});
-		model.addObserver(ob);
-		view = (ImageView) findViewById(R.id.image2);
-		ob = new ObserserverView<ImageView>(view, new ObserverViewRunnable<ImageView>() {
-			@Override
-			public void run(Observable observable, ImageView view) {
-				view.setImageBitmap(((ImageModel)observable).getBitmap());
-				view.invalidate();
-			}
-		});
-		model.addObserver(ob);
-		view = (ImageView) findViewById(R.id.image3);
-		ob = new ObserserverView<ImageView>(view, new ObserverViewRunnable<ImageView>() {
-			@Override
-			public void run(Observable observable, ImageView view) {
-				view.setImageBitmap(((ImageModel)observable).getBitmap());
-				view.invalidate();
-			}
-		});
-		model.addObserver(ob);
+		ObservableFutureTask<ImageModel> imageModel = donwloadServiceBinder
+				.getService().get(ImageModel.class,
+						LOGO_GOOGLE_URL);
+
+		ObserserverView<ImageView> ob = new ObserserverView<ImageView>(view1,
+				new ObserverViewRunnable<ImageView>() {
+					@Override
+					public void run(Observable model, ImageView view) {
+						view.setImageBitmap(((ImageModel) model).getBitmap());
+						view.invalidate();
+					}
+				});
+		imageModel.addObserver(ob);
+
+		ob = new ObserserverView<ImageView>(view2,
+				new ObserverViewRunnable<ImageView>() {
+					@Override
+					public void run(Observable model, ImageView view) {
+						view.setImageBitmap(((ImageModel) model).getBitmap());
+						view.invalidate();
+					}
+				});
+		imageModel.addObserver(ob);
+
+		ob = new ObserserverView<ImageView>(view3,
+				new ObserverViewRunnable<ImageView>() {
+					@Override
+					public void run(Observable model, ImageView view) {
+						view.setImageBitmap(((ImageModel) model).getBitmap());
+						view.invalidate();
+					}
+				});
+		imageModel.addObserver(ob);
 	}
 
 	private ServiceConnection conn = new ServiceConnection() {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			Log.e("MainActivity", "disconnect service");
 			linkedToService = false;
 		}
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder serviceBinder) {
-			Log.e("MainActivity", "connect service");
-			mBinder = ((MyServiceBinder) serviceBinder);
+			donwloadServiceBinder = ((DownloadServiceBinder) serviceBinder);
 			linkedToService = true;
 			setModels();
 		}

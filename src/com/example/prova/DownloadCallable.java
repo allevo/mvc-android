@@ -6,14 +6,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 
 import org.json.JSONException;
 
-import android.util.Log;
-
 class DownloadCallable<T extends ImageModel> implements Callable<T> {
-	public Future<T> obj;
+	
 	private Class<T> type;
 	private String url;
 
@@ -24,12 +21,8 @@ class DownloadCallable<T extends ImageModel> implements Callable<T> {
 
 	@Override
 	public T call() throws JSONException {
-		Log.e("MyThread", "call");
 		try {
-			URL url = new URL(this.url);
-			URLConnection conn = url.openConnection();
-			conn.connect();
-			InputStream iStream = conn.getInputStream();
+			InputStream iStream = fetchInputStreamFromStringUlr(url);
 			T model = type.newInstance();
 			model.setFromInputStream(iStream);
 			return model;
@@ -43,6 +36,12 @@ class DownloadCallable<T extends ImageModel> implements Callable<T> {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private InputStream fetchInputStreamFromStringUlr(String url) throws MalformedURLException, IOException {
+		URLConnection conn = new URL(url).openConnection();
+		conn.connect();
+		return conn.getInputStream();
 	}
 
 }

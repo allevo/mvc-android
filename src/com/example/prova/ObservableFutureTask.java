@@ -20,9 +20,8 @@ class ObservableFutureTask<T extends ImageModel> extends FutureTask<T> {
 		if (isDone()) {
 			try {
 				T t = this.get();
-				for(Observer observer : observers) {
+				for(Observer observer : observers)
 					t.addObserver(observer);
-				}
 				t.notifyChanges();
 			} catch (InterruptedException e) {
 				e.printStackTrace();

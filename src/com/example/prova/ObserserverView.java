@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 
 public class ObserserverView<T extends View> implements Observer {
@@ -19,11 +18,9 @@ public class ObserserverView<T extends View> implements Observer {
 
 	@Override
 	public void update(final Observable observable, Object arg1) {
-		Log.e("ObserverView", "update");
 		((Activity) view.getContext()).runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Log.e("ObservarView", "run runnable");
 				runnable.run(observable, view);
 			}
 		});

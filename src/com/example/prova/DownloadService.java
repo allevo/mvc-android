@@ -27,7 +27,7 @@ public class DownloadService extends Service {
 		return th;
 	}
 
-	private IBinder binder = new MyServiceBinder();
+	private IBinder binder = new DownloadServiceBinder();
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -35,7 +35,7 @@ public class DownloadService extends Service {
 		return binder;
 	}
 
-	class MyServiceBinder extends Binder {
+	class DownloadServiceBinder extends Binder {
 		DownloadService getService() {
 			return DownloadService.this;
 		}

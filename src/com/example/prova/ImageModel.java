@@ -5,7 +5,6 @@ import java.util.Observable;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 public class ImageModel extends Observable {
 
@@ -16,8 +15,6 @@ public class ImageModel extends Observable {
 	}
 
 	public void notifyChanges() {
-
-		Log.e("MyModel", "notifyChanges ");
 		setChanged();
 		notifyObservers(this);
 	}
