@@ -1,6 +1,7 @@
-package com.example.prova;
+package com.example.prova.model;
 
 import java.io.InputStream;
+
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

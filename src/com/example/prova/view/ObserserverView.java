@@ -1,4 +1,4 @@
-package com.example.prova;
+package com.example.prova.view;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -24,10 +24,5 @@ public class ObserserverView<T extends View> implements Observer {
 				runnable.run(observable, view);
 			}
 		});
-	}
-
-	
-	interface ObserverViewRunnable<T> {
-		public void run(Observable observable, T view);
 	}
 }

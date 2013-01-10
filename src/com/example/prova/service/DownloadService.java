@@ -1,8 +1,11 @@
-package com.example.prova;
+package com.example.prova.service;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.example.prova.ObservableFutureTask;
+import com.example.prova.model.ObservableModel;
 
 import android.app.Service;
 import android.content.Intent;
@@ -35,8 +38,8 @@ public class DownloadService extends Service {
 		return binder;
 	}
 
-	class DownloadServiceBinder extends Binder {
-		DownloadService getService() {
+	public class DownloadServiceBinder extends Binder {
+		public DownloadService getService() {
 			return DownloadService.this;
 		}
 	}

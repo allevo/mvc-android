@@ -1,4 +1,4 @@
-package com.example.prova;
+package com.example.prova.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,9 @@ import java.util.concurrent.Callable;
 
 import org.json.JSONException;
 
-class DownloadCallable<T extends ObservableModel> implements Callable<T> {
+import com.example.prova.model.ObservableModel;
+
+public class DownloadCallable<T extends ObservableModel> implements Callable<T> {
 	
 	private Class<T> type;
 	private String url;

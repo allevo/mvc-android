@@ -5,7 +5,10 @@ import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-class ObservableFutureTask<T extends ObservableModel> extends FutureTask<T> {
+import com.example.prova.model.ObservableModel;
+import com.example.prova.service.DownloadCallable;
+
+public class ObservableFutureTask<T extends ObservableModel> extends FutureTask<T> {
 
 	private ArrayList<Observer> observers;
 

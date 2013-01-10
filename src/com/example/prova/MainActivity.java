@@ -11,14 +11,17 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.ImageView;
 
-import com.example.prova.DownloadService.DownloadServiceBinder;
-import com.example.prova.ObserserverView.ObserverViewRunnable;
+import com.example.prova.model.ImageModel;
+import com.example.prova.service.DownloadService;
+import com.example.prova.service.DownloadService.DownloadServiceBinder;
+import com.example.prova.view.ObserserverView;
+import com.example.prova.view.ObserverViewRunnable;
 
 public class MainActivity extends Activity {
 
 	private static final String LOGO_GOOGLE_URL = "https://www.google.it/images/srpr/logo3w.png";
 	
-	protected DownloadServiceBinder donwloadServiceBinder;
+	protected DownloadService donwloadService;
 	protected boolean linkedToService;
 
 	private ImageView view1;
@@ -46,8 +49,8 @@ public class MainActivity extends Activity {
 	}
 
 	protected void setModels() {
-		ObservableFutureTask<ImageModel> imageModel = donwloadServiceBinder
-				.getService().get(ImageModel.class,
+		ObservableFutureTask<ImageModel> imageModel = donwloadService
+				.get(ImageModel.class,
 						LOGO_GOOGLE_URL);
 
 		ObserserverView<ImageView> ob = new ObserserverView<ImageView>(view1,
@@ -90,7 +93,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder serviceBinder) {
-			donwloadServiceBinder = ((DownloadServiceBinder) serviceBinder);
+			donwloadService = ((DownloadServiceBinder) serviceBinder).getService();
 			linkedToService = true;
 			setModels();
 		}
