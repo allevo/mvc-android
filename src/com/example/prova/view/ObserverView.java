@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.prova.ObservableFutureTask;
 import com.example.prova.model.ObservableModel;
+import com.example.prova.view.runnable.ObserverViewRunnable;
 
 public class ObserverView<T extends View> implements Observer {
 

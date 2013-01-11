@@ -1,7 +1,5 @@
 package com.example.prova;
 
-import java.util.Observable;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,7 +13,7 @@ import com.example.prova.model.ImageModel;
 import com.example.prova.service.DownloadService;
 import com.example.prova.service.DownloadService.DownloadServiceBinder;
 import com.example.prova.view.ObserverViewFactory;
-import com.example.prova.view.ObserverViewRunnable;
+import com.example.prova.view.runnable.ImageRunnable;
 
 public class MainActivity extends Activity {
 
@@ -50,36 +48,18 @@ public class MainActivity extends Activity {
 	}
 
 	protected void setModels() {
-		ObservableFutureTask<ImageModel> imageModel = downloadService
+		ObservableFutureTask<ImageModel> googleLogoModel = downloadService
 				.get(LOGO_GOOGLE_URL);
 
 		ObserverViewFactory.createFromView(view1)
-				.setRunnable(new ObserverViewRunnable<ImageView>() {
-					@Override
-					public void run(Observable model, ImageView view) {
-						view.setImageBitmap(((ImageModel) model).getBitmap());
-						view.invalidate();
-					}
-				}).observe(imageModel);
+				.setRunnable(new ImageRunnable()).observe(googleLogoModel);
 		ObserverViewFactory.createFromView(view2)
-				.setRunnable(new ObserverViewRunnable<ImageView>() {
-					@Override
-					public void run(Observable model, ImageView view) {
-						view.setImageBitmap(((ImageModel) model).getBitmap());
-						view.invalidate();
-					}
-				}).observe(imageModel);
+				.setRunnable(new ImageRunnable()).observe(googleLogoModel);
 
-		ObservableFutureTask<ImageModel> iambooLogo = downloadService
+		ObservableFutureTask<ImageModel> iambooLogoModel = downloadService
 				.get(IAMBOO_LOGO_URL);
 		ObserverViewFactory.createFromView(view3)
-				.setRunnable(new ObserverViewRunnable<ImageView>() {
-					@Override
-					public void run(Observable model, ImageView view) {
-						view.setImageBitmap(((ImageModel) model).getBitmap());
-						view.invalidate();
-					}
-				}).observe(iambooLogo);
+				.setRunnable(new ImageRunnable()).observe(iambooLogoModel);
 	}
 
 	private ServiceConnection conn = new ServiceConnection() {

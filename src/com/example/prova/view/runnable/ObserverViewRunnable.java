@@ -1,4 +1,4 @@
-package com.example.prova.view;
+package com.example.prova.view.runnable;
 
 import java.util.Observable;
 

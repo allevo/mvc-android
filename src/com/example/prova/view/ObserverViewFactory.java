@@ -1,5 +1,7 @@
 package com.example.prova.view;
 
+import com.example.prova.view.runnable.ObserverViewRunnable;
+
 import android.view.View;
 
 public class ObserverViewFactory {
