@@ -50,8 +50,8 @@ public class MainActivity extends Activity {
 	}
 
 	protected void setModels() {
-		ObservableFutureTask<ImageModel> imageModel = downloadService.get(
-				ImageModel.class, LOGO_GOOGLE_URL);
+		ObservableFutureTask<ImageModel> imageModel = downloadService
+				.get(LOGO_GOOGLE_URL);
 
 		ObserverViewFactory.createFromView(view1)
 				.setRunnable(new ObserverViewRunnable<ImageView>() {
@@ -61,7 +61,6 @@ public class MainActivity extends Activity {
 						view.invalidate();
 					}
 				}).observe(imageModel);
-
 		ObserverViewFactory.createFromView(view2)
 				.setRunnable(new ObserverViewRunnable<ImageView>() {
 					@Override
@@ -71,9 +70,8 @@ public class MainActivity extends Activity {
 					}
 				}).observe(imageModel);
 
-		ObservableFutureTask<ImageModel> iambooLogo = downloadService.get(
-				ImageModel.class,
-				IAMBOO_LOGO_URL);
+		ObservableFutureTask<ImageModel> iambooLogo = downloadService
+				.get(IAMBOO_LOGO_URL);
 		ObserverViewFactory.createFromView(view3)
 				.setRunnable(new ObserverViewRunnable<ImageView>() {
 					@Override

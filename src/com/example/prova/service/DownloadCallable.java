@@ -2,30 +2,29 @@ package com.example.prova.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.ParameterizedType;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.Callable;
 
-import org.json.JSONException;
-
 import com.example.prova.model.ObservableModel;
 
 public class DownloadCallable<T extends ObservableModel> implements Callable<T> {
 	
-	private Class<T> type;
 	private String url;
 
-	public DownloadCallable(Class<T> type, String url) {
-		this.type = type;
-		this.url = url;
+	public DownloadCallable(String url) {
+		this.url= url; 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public T call() throws JSONException {
+	public T call() {
 		try {
 			InputStream iStream = fetchInputStreamFromStringUlr(url);
-			T model = type.newInstance();
+			T model = (T) ((Class<T>)((ParameterizedType)this.getClass().
+				       getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();
 			model.setFromInputStream(iStream);
 			return model;
 		} catch (MalformedURLException e) {

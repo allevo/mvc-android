@@ -12,8 +12,8 @@ public class ObservableFutureTask<T extends ObservableModel> extends FutureTask<
 
 	private ArrayList<Observer> observers;
 
-	public ObservableFutureTask(Class<T> type, String url) {
-		super(new DownloadCallable<T>(type, url));
+	public ObservableFutureTask(String url) {
+		super(new DownloadCallable<T>(url));
 		observers = new ArrayList<Observer>();
 	}
 
