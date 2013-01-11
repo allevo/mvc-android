@@ -14,14 +14,16 @@ import android.widget.ImageView;
 import com.example.prova.model.ImageModel;
 import com.example.prova.service.DownloadService;
 import com.example.prova.service.DownloadService.DownloadServiceBinder;
-import com.example.prova.view.ObserserverView;
+import com.example.prova.view.ObserverViewFactory;
 import com.example.prova.view.ObserverViewRunnable;
 
 public class MainActivity extends Activity {
 
 	private static final String LOGO_GOOGLE_URL = "https://www.google.it/images/srpr/logo3w.png";
-	
-	protected DownloadService donwloadService;
+
+	private static final String IAMBOO_LOGO_URL = "http://www.iamboo.it/images/stories/logoiamboo.png";
+
+	protected DownloadService downloadService;
 	protected boolean linkedToService;
 
 	private ImageView view1;
@@ -33,11 +35,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-
 		view1 = (ImageView) findViewById(R.id.image1);
 		view2 = (ImageView) findViewById(R.id.image2);
 		view3 = (ImageView) findViewById(R.id.image3);
-		
+
 		bindService(new Intent(this, DownloadService.class), conn,
 				Context.BIND_AUTO_CREATE);
 	}
@@ -49,39 +50,38 @@ public class MainActivity extends Activity {
 	}
 
 	protected void setModels() {
-		ObservableFutureTask<ImageModel> imageModel = donwloadService
-				.get(ImageModel.class,
-						LOGO_GOOGLE_URL);
+		ObservableFutureTask<ImageModel> imageModel = downloadService.get(
+				ImageModel.class, LOGO_GOOGLE_URL);
 
-		ObserserverView<ImageView> ob = new ObserserverView<ImageView>(view1,
-				new ObserverViewRunnable<ImageView>() {
+		ObserverViewFactory.createFromView(view1)
+				.setRunnable(new ObserverViewRunnable<ImageView>() {
 					@Override
 					public void run(Observable model, ImageView view) {
 						view.setImageBitmap(((ImageModel) model).getBitmap());
 						view.invalidate();
 					}
-				});
-		imageModel.addObserver(ob);
+				}).observe(imageModel);
 
-		ob = new ObserserverView<ImageView>(view2,
-				new ObserverViewRunnable<ImageView>() {
+		ObserverViewFactory.createFromView(view2)
+				.setRunnable(new ObserverViewRunnable<ImageView>() {
 					@Override
 					public void run(Observable model, ImageView view) {
 						view.setImageBitmap(((ImageModel) model).getBitmap());
 						view.invalidate();
 					}
-				});
-		imageModel.addObserver(ob);
+				}).observe(imageModel);
 
-		ob = new ObserserverView<ImageView>(view3,
-				new ObserverViewRunnable<ImageView>() {
+		ObservableFutureTask<ImageModel> iambooLogo = downloadService.get(
+				ImageModel.class,
+				IAMBOO_LOGO_URL);
+		ObserverViewFactory.createFromView(view3)
+				.setRunnable(new ObserverViewRunnable<ImageView>() {
 					@Override
 					public void run(Observable model, ImageView view) {
 						view.setImageBitmap(((ImageModel) model).getBitmap());
 						view.invalidate();
 					}
-				});
-		imageModel.addObserver(ob);
+				}).observe(iambooLogo);
 	}
 
 	private ServiceConnection conn = new ServiceConnection() {
@@ -93,7 +93,8 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder serviceBinder) {
-			donwloadService = ((DownloadServiceBinder) serviceBinder).getService();
+			downloadService = ((DownloadServiceBinder) serviceBinder)
+					.getService();
 			linkedToService = true;
 			setModels();
 		}
