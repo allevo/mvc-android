@@ -6,11 +6,11 @@ import java.util.concurrent.FutureTask;
 
 import android.util.Log;
 
-public class MyFutureTask<T extends MVCObservable> extends FutureTask<T> {
+public class MVCFutureTask<T extends MVCObservable> extends FutureTask<T> {
 
 	private Result callable;
 
-	public MyFutureTask(Callable<T> callable) {
+	public MVCFutureTask(Callable<T> callable) {
 		super(callable);
 	}
 	

@@ -25,7 +25,7 @@ public class MVCController<T extends MVCObservable> implements Result {
 
 	public void execute(FutureCallable<T> callable) {
 		ExecutorService executor = Executors.newFixedThreadPool(5);
-		MyFutureTask<T> futureCallable = new MyFutureTask<T>(callable);
+		MVCFutureTask<T> futureCallable = new MVCFutureTask<T>(callable);
 		futureCallable.onResult(this);
 		executor.execute(futureCallable);
 	}
