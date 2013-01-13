@@ -1,4 +1,4 @@
-package com.tallevi.android.mvc;
+package com.tallevi.android.mvc.callable;
 
 import java.util.concurrent.Callable;
 

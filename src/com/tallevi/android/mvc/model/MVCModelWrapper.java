@@ -1,7 +1,8 @@
-package com.tallevi.android.mvc;
+package com.tallevi.android.mvc.model;
 
 
-public class ObservableModel<T extends MVCObservable> {
+
+public class MVCModelWrapper<T extends MVCModel> {
 
 	private T model;
 	
@@ -10,7 +11,7 @@ public class ObservableModel<T extends MVCObservable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void set(MVCObservable model) {
+	public void set(MVCModel model) {
 		this.model = (T) model;
 	}
 

@@ -1,13 +1,13 @@
-package com.tallevi.android.mvc;
+package com.tallevi.android.mvc.view;
 
 import android.view.View;
 
 
-public class ObserverView {
+public class MVCViewWrapper {
 
 	private View view;
 
-	public ObserverView(View view) {
+	public MVCViewWrapper(View view) {
 		this.view = view;
 	}
 

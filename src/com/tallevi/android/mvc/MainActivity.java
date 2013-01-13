@@ -1,5 +1,9 @@
 package com.tallevi.android.mvc;
 
+import com.tallevi.android.mvc.callable.ImageCallable;
+import com.tallevi.android.mvc.model.ImageModel;
+import com.tallevi.android.mvc.view.MVCViewWrapper;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,11 +46,11 @@ public class MainActivity extends Activity {
 		Log.e("MainActivity", "setModel");
 		
 		MVCController<ImageModel> controller = MVCController.createControllerFromModel();
-		ObserverView view = new ObserverView(this.view1);
+		MVCViewWrapper view = new MVCViewWrapper(this.view1);
 		controller.link(view, new ImageResult());
-		view = new ObserverView(this.view2);
+		view = new MVCViewWrapper(this.view2);
 		controller.link(view, new ImageResult());
-		view = new ObserverView(this.view3);
+		view = new MVCViewWrapper(this.view3);
 		controller.link(view, new ImageResult());
 		controller.execute(new ImageCallable(LOGO_GOOGLE_URL));
 	}

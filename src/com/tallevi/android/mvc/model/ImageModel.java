@@ -1,12 +1,13 @@
-package com.tallevi.android.mvc;
+package com.tallevi.android.mvc.model;
 
 import java.io.InputStream;
+
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
-public class ImageModel implements MVCObservable {
+public class ImageModel implements MVCModel {
 
 	private Bitmap bitmap;
 

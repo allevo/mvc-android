@@ -1,4 +1,4 @@
-package com.tallevi.android.mvc;
+package com.tallevi.android.mvc.callable;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -7,6 +7,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.tallevi.android.mvc.model.ImageModel;
 
 import android.util.Log;
 
