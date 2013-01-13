@@ -1,4 +1,4 @@
-package com.example.prova;
+package com.tallevi.android.mvc;
 
 import android.view.View;
 import android.widget.ImageView;

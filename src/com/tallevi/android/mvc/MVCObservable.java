@@ -1,4 +1,4 @@
-package com.example.prova;
+package com.tallevi.android.mvc;
 
 public interface MVCObservable {
 	
