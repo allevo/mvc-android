@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
-        <service android:name=".DownloadService" />
+        <service android:name=".service.DownloadService" />
         
         <activity
             android:name="com.example.prova.MainActivity"
