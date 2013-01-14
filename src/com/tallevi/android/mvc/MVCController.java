@@ -34,6 +34,12 @@ public class MVCController<T extends MVCModel> implements Result {
 		Log.e("MVCController", "link");
 		views.put(new MVCViewWrapper(view), result);
 	}
+	
+
+	public <E extends View & Result> void link(E view) {
+		Log.e("MVCController", "link");
+		views.put(new MVCViewWrapper(view), view);
+	}
 
 	public void execute(FutureCallable<T> callable) {
 		ExecutorService executor = Executors.newFixedThreadPool(5);
